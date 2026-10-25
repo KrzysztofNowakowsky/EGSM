@@ -282,8 +282,15 @@ folium.GeoJson(
 ).add_to(fg)
 fg.add_to(m)
 
-folium.Marker([VENT_LONLAT[1], VENT_LONLAT[0]], tooltip="Stożek Tajogaite (przybliżone położenie)",
-              icon=folium.Icon(color="black", icon="fire", prefix="fa")).add_to(m)
+# Trójkąt z CSS zamiast ikony Font Awesome: mapa nie zależy od czcionki z CDN
+folium.Marker(
+    [VENT_LONLAT[1], VENT_LONLAT[0]], tooltip="Stożek Tajogaite (przybliżone położenie)",
+    icon=folium.DivIcon(
+        html='<div style="width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;'
+             'border-bottom:19px solid #111827;filter:drop-shadow(0 0 2px #fff)"></div>',
+        icon_size=(22, 19), icon_anchor=(11, 19),
+    ),
+).add_to(m)
 
 folium.LayerControl(collapsed=False).add_to(m)
 xmin, ymin, xmax, ymax = lava_wgs.total_bounds
